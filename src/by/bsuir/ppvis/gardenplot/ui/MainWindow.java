@@ -1,4 +1,4 @@
-package by.bsuir.ppvis.gardenplot;
+package by.bsuir.ppvis.gardenplot.ui;
 
 import javax.swing.JFrame;
 
@@ -19,7 +19,7 @@ public class MainWindow extends JFrame {
 	 */
 	public void chooseImplement() {
 		
-	}	
+	}
 	
 	/** Закрыть.
 	 * Вызывает закрытие всей программы.

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package by.bsuir.ppvis.gardenplot;
+package by.bsuir.ppvis.gardenplot.ui;
 
 import javax.swing.JDialog;
 
