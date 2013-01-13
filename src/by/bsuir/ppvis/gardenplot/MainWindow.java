@@ -2,18 +2,67 @@ package by.bsuir.ppvis.gardenplot;
 
 import javax.swing.JFrame;
 
-/**
+/** Главное окно программы.
  * @author Oleg Beloglazov
  *
  */
 public class MainWindow extends JFrame {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
 
+	}
+	
+	/** Выбрать инструмент.
+	 * Вызывается диалоговое окно выбора инструмента.
+	 * 
+	 */
+	public void chooseImplement() {
+		
+	}	
+	
+	/** Закрыть.
+	 * Вызывает закрытие всей программы.
+	 * 
+	 */
+	public void close() {
+		
+	}
+	
+	/** Запустить.
+	 * Запустить систему.
+	 * 
+	 */
+	public void run() {
+		
+	}
+	
+	/** Обновить информацию.
+	 * 
+	 */
+	public void refreshInfo() {
+		
+	}
+	
+	/** Полить дерево.
+	 * 
+	 */
+	public void waterTree() {
+		
+	}
+	
+	/** Собрать плоды.
+	 * 
+	 */
+	public void pickFruits() {
+		
+	}
+	
+	/** Удалить сорняки.
+	 * 
+	 */
+	public void removeWeeds() {
+		
 	}
 
 }
