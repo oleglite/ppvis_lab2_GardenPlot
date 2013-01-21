@@ -6,17 +6,18 @@ package by.bsuir.ppvis.gardenplot;
  */
 public abstract class Instrument {
 	
+	// название инструмента
 	private final String mImplementName;
 	
-	/** Основной конструктор
-	 * @param name название инструмента
+	/** Конструктор с указанием названия инструмента.
+	 * @param name название инструмента.
 	 */
 	public Instrument(String name) {
 		mImplementName = name;
 	}
 	
-	/** Получить название инструмента
-	 * @return название инструмента
+	/** Получить название инструмента.
+	 * @return название инструмента.
 	 */
 	public String getName() {
 		return mImplementName;
