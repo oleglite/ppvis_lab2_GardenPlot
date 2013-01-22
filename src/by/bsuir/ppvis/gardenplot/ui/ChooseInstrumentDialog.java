@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -50,6 +51,7 @@ public class ChooseInstrumentDialog extends JDialog implements ActionListener {
 	 */
 	public static String showDialog(JFrame owner, String[] instrumentsNames) {
 		mDialog = new ChooseInstrumentDialog(owner, instrumentsNames);
+		mDialog.setLocation(owner.getLocation().x + 40, owner.getLocation().y + 40);
 		mDialog.setVisible(true);
 		return mSelectedInstrument;
 	}
@@ -90,8 +92,7 @@ public class ChooseInstrumentDialog extends JDialog implements ActionListener {
 		contentPane.add(buttonsPanel, BorderLayout.PAGE_END);
 		
 		pack();
-		setResizable(false);
-
+		setResizable(false);		
 	}
 	
 	/** Создать панель инструментов.
