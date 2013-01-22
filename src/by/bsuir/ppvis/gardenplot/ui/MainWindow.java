@@ -2,6 +2,7 @@ package by.bsuir.ppvis.gardenplot.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -47,17 +48,7 @@ public class MainWindow extends JFrame implements ActionListener {
 	private JTable mTable;
 	private GardenTableModel mGardenTableModel;
 
-	public static void main(String[] args) {
-		/*
-		String[] names = {"Ведро", "Ножницы"};
-		JFrame jframe = new JFrame();
-		jframe.setSize(new Dimension(100, 100));
-		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		jframe.setVisible(true);
-		
-		System.out.println(ChooseInstrumentDialog.showDialog(jframe, names));
-		*/
-		
+	public static void main(String[] args) {		
 		
 		SwingUtilities.invokeLater(new Runnable() {
 			
@@ -66,8 +57,7 @@ public class MainWindow extends JFrame implements ActionListener {
 				
 				int option = JOptionPane.showConfirmDialog(null, STARTUP_DIALOG_MESSAGE, STARTUP_DIALOG_TITLE, JOptionPane.YES_NO_OPTION);
 				if(option == JOptionPane.YES_OPTION) {
-					MainWindow window = new MainWindow();
-					window.setVisible(true);
+					new MainWindow().setVisible(true);
 				} else {
 					System.exit(0);
 				}
@@ -78,7 +68,7 @@ public class MainWindow extends JFrame implements ActionListener {
 	}
 	
 	public MainWindow() {
-		mGardenPlot = new GardenPlot(5);
+		mGardenPlot = new GardenPlot(10);
 		mWorker = new Worker(mGardenPlot);
 		
 		setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
@@ -111,20 +101,12 @@ public class MainWindow extends JFrame implements ActionListener {
 		buttonsPanel.add(Box.createHorizontalStrut(10));
 		buttonsPanel.add(exitButton);
 		
-		// размещаем созданные элементы в окне
+		// размещаем таблицу и панель кнопок в окне
 		setLayout(new BorderLayout());
 		add(tableScrollPane, BorderLayout.CENTER);
 		add(buttonsPanel, BorderLayout.SOUTH);
 		
 		pack();
-	}
-	
-	/** Выбрать инструмент.
-	 * Вызывается диалоговое окно выбора инструмента.
-	 * 
-	 */
-	public void chooseImplement() {
-		
 	}
 	
 	/** Закрыть.
@@ -144,6 +126,9 @@ public class MainWindow extends JFrame implements ActionListener {
 		}
 	}
 	
+	/** Проверить растение в текущем участке и пройти на следующий.
+	 * 
+	 */
 	private void moveNextPlant() {
 		int plantNumber = mWorker.getPosition();
 		checkNeed(plantNumber, Plant.Need.NEEDS_PICK_FRUITS);
@@ -153,7 +138,12 @@ public class MainWindow extends JFrame implements ActionListener {
 		mGardenTableModel.fireTableDataChanged();
 	}
 	
+	/** Проверить указанную потребность растения.
+	 * @param plantNumber номер растения.
+	 * @param need потребность.
+	 */
 	private void checkNeed(int plantNumber, Plant.Need need) {
+		// в зависимости от потребности выбирается сообщениние диалогового окна
 		String actionMessage = null;
 		if(need == Plant.Need.NEEDS_PICK_FRUITS) {
 			actionMessage = ACTION_PICK_MESSAGE;
@@ -164,8 +154,11 @@ public class MainWindow extends JFrame implements ActionListener {
 		}
 		while(true) {
 			try {
-				if(mGardenPlot.checkPlantNeed(plantNumber, need) && showActionConfirmDialog(actionMessage)) {	
+				// если потребность существует и подтверждено её устарнение
+				if(mGardenPlot.checkPlantNeed(plantNumber, need) && showActionConfirmDialog(actionMessage)) {
+					// получить название инструмента с помощью диалогового окна
 					String instrumentName = ChooseInstrumentDialog.showDialog(this, mGardenPlot.getInstrumentsNames());
+					// в зависимости от типа потребности выполнить действие
 					if(need == Plant.Need.NEEDS_PICK_FRUITS) {
 						mGardenPlot.pickFruits(plantNumber, instrumentName);
 					} else if(need == Plant.Need.NEEDS_REMOVE_WEEDS) {
@@ -175,8 +168,10 @@ public class MainWindow extends JFrame implements ActionListener {
 					}
 					mGardenTableModel.fireTableDataChanged();
 				}
+				// если потребность отсутствует, или она успешно устранена, выйти из цикла
 				return;
 			}
+			// выбран не верный инструмент, показать сообщение и попробовать ещё раз
 			catch(BadInstrumentException e) {
 				JOptionPane.showMessageDialog(this, ACTION_BAD_INSTRUMENT_MESSAGE, ACTION_DIALOG_TITLE, JOptionPane.WARNING_MESSAGE);
 			}
